@@ -112,23 +112,23 @@
     "node": ">= 6"
   },
   "scripts": {
-    "babel": "babel ./components --out-dir ./lib",
-    "build": "cross-env NODE_ENV=production gulp",
-    "clean": "rimraf ./lib",
-    "css": "cpx \"./components/**/*.css\" ./lib",
+    "babel": "echo \"babel ./components --out-dir ./lib\"",
+    "build": "echo \"cross-env NODE_ENV=production gulp\"",
+    "clean": "echo \"rimraf ./lib\"",
+    "css": "echo \"cpx \"./components/**/*.css\" ./lib\"",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint ./components/**/*.css",
     "lint:js": "eslint ./ --ext .js",
     "lint:staged": "lint-staged",
-    "patch": "bumped release patch",
+    "patch": "echo \"bumped release patch\"",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
-    "release": "bumped release",
+    "release": "echo \"bumped release\"",
     "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
     "test": "jest",
     "test:watch": "jest --watch --no-watchman",
     "ts": "tsc",
-    "tsd": "cpx \"./components/**/*.d.ts\" ./lib"
+    "tsd": "echo \"cpx \"./components/**/*.d.ts\" ./lib\""
   },
   "license": "MIT",
   "jest": {
