@@ -10,6 +10,13 @@
     "name": "Javier Velasco Arjona",
     "url": "http://javivelasco.com/"
   },
+  "contributors": [
+    {
+      "email": "contact@rspective.com",
+      "name": "rspective",
+      "url": "https://www.rspective.com/"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/react-toolbox/react-toolbox.git"
