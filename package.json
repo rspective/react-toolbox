@@ -57,11 +57,7 @@
     "caniuse-db": "^1.0.30000652",
     "cpx": "^1.5.0",
     "cross-env": "^5.0.0",
-    "css-loader": "^0.28.2",Message @mmoczulski
-    ￼￼￼Choose Files￼￼
-    About this conversation
-    ￼
-
+    "css-loader": "^0.28.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.1",
