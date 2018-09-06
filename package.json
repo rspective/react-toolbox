@@ -57,7 +57,11 @@
     "caniuse-db": "^1.0.30000652",
     "cpx": "^1.5.0",
     "cross-env": "^5.0.0",
-    "css-loader": "^0.28.2",
+    "css-loader": "^0.28.2",Message @mmoczulski
+    ￼￼￼Choose Files￼￼
+    About this conversation
+    ￼
+
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.0.1",
@@ -124,7 +128,7 @@
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "release": "echo \"bumped release\"",
-    "start": "cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server",
+    "start": "echo \"cross-env NODE_ENV=development UV_THREADPOOL_SIZE=100 node ./server\"",
     "test": "jest",
     "test:watch": "jest --watch --no-watchman",
     "ts": "tsc",
