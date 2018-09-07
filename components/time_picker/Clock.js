@@ -1,11 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies,react/jsx-filename-extension */
+/* eslint-disable import/no-extraneous-dependencies,react/jsx-filename-extension,max-len */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import CssTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-import { getAnimationModule } from 'react-toolbox/lib/utils/utils';
-import time from 'react-toolbox/lib/utils/time';
-import Hours from 'react-toolbox/lib/time_picker/ClockHours';
-import Minutes from 'react-toolbox/lib/time_picker/ClockMinutes';
+import { CSSTransition } from 'react-transition-group';
+import { getAnimationModule } from '../utils/utils';
+import time from '../utils/time';
+import Hours from './ClockHours';
+import Minutes from './ClockMinutes';
 
 class Clock extends Component {
   static propTypes = {
@@ -134,10 +134,9 @@ class Clock extends Component {
           style={{ height: this.state.radius * 2 }}
           ref={(node) => { this.placeholderNode = node; }}
         >
-          <CssTransitionGroup
-            transitionName={animationModule}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={500}
+          <CSSTransition
+            classNames={animationModule}
+            timeout={{ enter: 500, exit: 500 }}
           >
             <div
               key={this.props.display}
@@ -147,7 +146,7 @@ class Clock extends Component {
               {this.props.display === 'hours' ? this.renderHours() : null}
               {this.props.display === 'minutes' ? this.renderMinutes() : null}
             </div>
-          </CssTransitionGroup>
+          </CSSTransition>
         </div>
       </div>
     );
