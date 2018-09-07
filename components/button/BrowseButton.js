@@ -1,10 +1,17 @@
+/* eslint-disable max-len */
+
+// Changes in respect to react-toolbox@2.0.0-beta.12
+//  1. react-toolbox npm package wasn't updated for 7 months so far and there was already `accept` to `input` elements implemented
+//  2. we needed a possibility to trigger `onChange` event for the same file again
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { BUTTON } from '../identifiers';
-import InjectFontIcon from '../font_icon/FontIcon';
-import rippleFactory from '../ripple/Ripple';
+import InjectFontIcon from '../font_icon';
+import rippleFactory from '../ripple';
+import _theme from './theme.css';
 
 const factory = (ripple, FontIcon) => {
   class SimpleBrowseButton extends Component {
@@ -44,6 +51,7 @@ const factory = (ripple, FontIcon) => {
         rippleWrapper: PropTypes.string,
         toggle: PropTypes.string,
       }),
+      triggerOnChangeForSameFile: PropTypes.bool,
       type: PropTypes.string,
     };
 
@@ -58,19 +66,20 @@ const factory = (ripple, FontIcon) => {
       neutral: true,
       primary: false,
       raised: false,
+      triggerOnChangeForSameFile: false,
     };
 
     getLevel = () => {
       if (this.props.primary) return 'primary';
       if (this.props.accent) return 'accent';
       return 'neutral';
-    }
+    };
 
     getShape = () => {
       if (this.props.raised) return 'raised';
       if (this.props.floating) return 'floating';
       return 'flat';
-    }
+    };
 
     handleMouseUp = (event) => {
       this.labelNode.blur();
@@ -84,6 +93,10 @@ const factory = (ripple, FontIcon) => {
 
     handleFileChange = (event) => {
       if (this.props.onChange) this.props.onChange(event);
+      if (this.props.triggerOnChangeForSameFile && this.fileInput) {
+        // this is a workaround to trigger `onChange` event for same file again
+        this.fileInput.value = '';
+      }
     };
 
     render() {
@@ -103,6 +116,7 @@ const factory = (ripple, FontIcon) => {
         primary,   // eslint-disable-line
         raised,    // eslint-disable-line
         theme,
+        triggerOnChangeForSameFile, // eslint-disable-line
         ...others
       } = this.props;
       const element = 'label';
@@ -127,7 +141,7 @@ const factory = (ripple, FontIcon) => {
       };
 
       return React.createElement(element, props,
-          icon ? <FontIcon className={theme.icon} value={icon} /> : null,
+        icon ? <FontIcon className={theme.icon} value={icon} /> : null,
         <span>{label}</span>,
         <input
           className={classes}
@@ -135,9 +149,14 @@ const factory = (ripple, FontIcon) => {
           accept={accept}
           multiple={multiple}
           onChange={this.handleFileChange}
+          ref={(input) => {
+            if (input) {
+              this.fileInput = input;
+            }
+          }}
         />,
-          children,
-        );
+        children,
+      );
     }
   }
 
@@ -145,6 +164,6 @@ const factory = (ripple, FontIcon) => {
 };
 
 const BrowseButton = factory(rippleFactory({ centered: false }), InjectFontIcon);
-export default themr(BUTTON)(BrowseButton);
-export { factory as browseButtonFactory };
-export { BrowseButton };
+export default themr(BUTTON, _theme)(BrowseButton);
+
+/* eslint-enable max-len */
