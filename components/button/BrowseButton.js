@@ -12,6 +12,7 @@ import { BUTTON } from '../identifiers';
 import InjectFontIcon from '../font_icon';
 import rippleFactory from '../ripple';
 import _theme from './theme.css';
+import Scrollable from '../Scrollable';
 
 const factory = (ripple, FontIcon) => {
   class SimpleBrowseButton extends Component {
@@ -140,22 +141,28 @@ const factory = (ripple, FontIcon) => {
         'data-react-toolbox': 'label',
       };
 
-      return React.createElement(element, props,
-        icon ? <FontIcon className={theme.icon} value={icon} /> : null,
-        <span>{label}</span>,
-        <input
-          className={classes}
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          onChange={this.handleFileChange}
-          ref={(input) => {
-            if (input) {
-              this.fileInput = input;
-            }
-          }}
-        />,
-        children,
+      return (
+        <Scrollable>
+          {
+          React.createElement(element, props,
+            icon ? <FontIcon className={theme.icon} value={icon} /> : null,
+            <span>{label}</span>,
+            <input
+              className={classes}
+              type="file"
+              accept={accept}
+              multiple={multiple}
+              onChange={this.handleFileChange}
+              ref={(input) => {
+                if (input) {
+                  this.fileInput = input;
+                }
+              }}
+            />,
+            children,
+          )
+         }
+        </Scrollable>
       );
     }
   }
