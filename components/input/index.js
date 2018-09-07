@@ -7,7 +7,7 @@ import theme from './theme.css';
 import Scrollable from '../Scrollable';
 
 const RTInput = inputFactory(FontIcon);
-const Input = (...props) => <Scrollable><RTInput {...props} /></Scrollable>;
+const Input = props => <Scrollable><RTInput {...props} /></Scrollable>;
 const ThemedInput = themr(INPUT, theme, { withRef: true })(Input);
 
 export default ThemedInput;

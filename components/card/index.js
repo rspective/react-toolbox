@@ -12,11 +12,11 @@ import Scrollable from '../Scrollable';
 
 const RTCardTitle = cardTitleFactory(Avatar);
 
-const Card = (...props) => <Scrollable><RTCard {...props} /></Scrollable>;
-const CardActions = (...props) => <Scrollable><RTCardActions {...props} /></Scrollable>;
-const CardMedia = (...props) => <Scrollable><RTCardMedia {...props} /></Scrollable>;
-const CardText = (...props) => <Scrollable><RTCardText {...props} /></Scrollable>;
-const CardTitle = (...props) => <Scrollable><RTCardTitle {...props} /></Scrollable>;
+const Card = props => <Scrollable><RTCard {...props} /></Scrollable>;
+const CardActions = props => <Scrollable><RTCardActions {...props} /></Scrollable>;
+const CardMedia = props => <Scrollable><RTCardMedia {...props} /></Scrollable>;
+const CardText = props => <Scrollable><RTCardText {...props} /></Scrollable>;
+const CardTitle = props => <Scrollable><RTCardTitle {...props} /></Scrollable>;
 
 const ThemedCard = themr(CARD, theme)(Card);
 const ThemedCardActions = themr(CARD, theme)(CardActions);
