@@ -172,5 +172,7 @@ const factory = (ripple, FontIcon) => {
 
 const BrowseButton = factory(rippleFactory({ centered: false }), InjectFontIcon);
 export default themr(BUTTON, _theme)(BrowseButton);
+export { factory as browseButtonFactory };
+export { BrowseButton };
 
 /* eslint-enable max-len */
