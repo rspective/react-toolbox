@@ -393,6 +393,7 @@
 }
 .dropdown {
   position: relative;
+  outline: none;
     box-sizing: border-box;
     font-family: var(--preferred-font);
     -webkit-font-smoothing: antialiased;
