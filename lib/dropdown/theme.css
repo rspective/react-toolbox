@@ -506,11 +506,14 @@
   margin: 0;
   overflow-y: auto;
   padding: 0;
+  width: 95%;
+  left: 0;
+  right: 0;
+  margin: auto;
   position: absolute;
   transition-duration: var(--animation-duration);
   transition-property: max-height, box-shadow;
   transition-timing-function: var(--animation-curve-default);
-  width: 100%;
   z-index: var(--z-index-high)
 }
 .values > * {
