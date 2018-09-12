@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { CARD } from '../identifiers';
 import InjectAvatar from '../avatar/Avatar';
+import Scrollable from '../Scrollable';
 
 const factory = (Avatar) => {
   const CardTitle = ({ avatar, children, className, subtitle, theme, title, ...other }) => {
@@ -13,17 +14,19 @@ const factory = (Avatar) => {
     }, className);
 
     return (
-      <div className={classes} {...other}>
-        {typeof avatar === 'string' ? <Avatar image={avatar} theme={theme} /> : avatar}
-        <div>
-          {title && <h5 className={theme.title}>{title}</h5>}
-          {children && typeof children === 'string' && (
-            <h5 className={theme.title}>{children}</h5>
-          )}
-          {subtitle && <p className={theme.subtitle}>{subtitle}</p>}
-          {children && typeof children !== 'string' && children}
+      <Scrollable>
+        <div className={classes} {...other}>
+          {typeof avatar === 'string' ? <Avatar image={avatar} theme={theme} /> : avatar}
+          <div>
+            {title && <h5 className={theme.title}>{title}</h5>}
+            {children && typeof children === 'string' && (
+              <h5 className={theme.title}>{children}</h5>
+            )}
+            {subtitle && <p className={theme.subtitle}>{subtitle}</p>}
+            {children && typeof children !== 'string' && children}
+          </div>
         </div>
-      </div>
+      </Scrollable>
     );
   };
 

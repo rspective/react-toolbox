@@ -3,38 +3,51 @@ import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { CARD } from '../identifiers';
+import Scrollable from '../Scrollable';
 
-const CardMedia = ({
-  aspectRatio,
-  children,
-  className,
-  color,
-  contentOverlay,
-  image,
-  theme,
-  ...other
-}) => {
-  const classes = classnames(theme.cardMedia, {
-    [theme[aspectRatio]]: aspectRatio,
-  }, className);
+/* eslint-disable react/prefer-stateless-function */
 
-  const innerClasses = classnames(theme.content, {
-    [theme.contentOverlay]: contentOverlay,
-  });
+class CardMedia extends React.Component {
 
-  const bgStyle = {
-    backgroundColor: color || undefined,
-    backgroundImage: typeof image === 'string' ? `url('${image}')` : undefined,
-  };
+  render() {
+    const {
+      aspectRatio,
+      children,
+      className,
+      color,
+      contentOverlay,
+      image,
+      theme,
+      ...other
+    } = this.props;
 
-  return (
-    <div style={bgStyle} className={classes} {...other}>
-      <div className={innerClasses}>
-        {children}
-      </div>
-    </div>
-  );
-};
+    const classes = classnames(theme.cardMedia, {
+      [theme[aspectRatio]]: aspectRatio,
+    }, className);
+
+    const innerClasses = classnames(theme.content, {
+      [theme.contentOverlay]: contentOverlay,
+    });
+
+    const bgStyle = {
+      backgroundColor: color || undefined,
+      backgroundImage: typeof image === 'string' ? `url('${image}')` : undefined,
+    };
+
+    return (
+      <Scrollable>
+        <div style={bgStyle} className={classes} {...other}>
+          <div className={innerClasses}>
+            {children}
+          </div>
+        </div>
+      </Scrollable>
+    );
+  }
+}
+
+/* eslint-enable react/prefer-stateless-function */
+
 
 CardMedia.propTypes = {
   aspectRatio: PropTypes.oneOf(['wide', 'square']),

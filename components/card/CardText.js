@@ -3,12 +3,25 @@ import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { CARD } from '../identifiers';
+import Scrollable from '../Scrollable';
 
-const CardText = ({ children, className, theme, ...other }) => (
-  <div className={classnames(theme.cardText, className)} {...other}>
-    {typeof children === 'string' ? <p>{children}</p> : children}
-  </div>
-);
+/* eslint-disable react/prefer-stateless-function */
+
+class CardText extends React.Component {
+
+  render() {
+    const { children, className, theme, ...other } = this.props;
+    return (
+      <Scrollable>
+        <div className={classnames(theme.cardText, className)} {...other}>
+          {typeof children === 'string' ? <p>{children}</p> : children}
+        </div>
+      </Scrollable>
+    );
+  }
+}
+
+/* eslint-enable react/prefer-stateless-function */
 
 CardText.propTypes = {
   children: PropTypes.node,

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import classnames from 'classnames';
 import { CARD } from '../identifiers';
+import Scrollable from '../Scrollable';
+
+/* eslint-disable react/prefer-stateless-function */
 
 const Card = ({ children, className, raised, theme, ...other }) => {
   const classes = classnames(theme.card, {
@@ -10,11 +13,15 @@ const Card = ({ children, className, raised, theme, ...other }) => {
   }, className);
 
   return (
-    <div data-react-toolbox="card" className={classes} {...other}>
-      {children}
-    </div>
+    <Scrollable>
+      <div data-react-toolbox="card" className={classes} {...other}>
+        {children}
+      </div>
+    </Scrollable>
   );
 };
+
+/* eslint-disable react/prefer-stateless-function */
 
 Card.propTypes = {
   children: PropTypes.node,

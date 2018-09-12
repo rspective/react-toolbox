@@ -5,6 +5,7 @@ import { themr } from 'react-css-themr';
 import { isValuePresent } from '../utils/utils';
 import { INPUT } from '../identifiers';
 import InjectedFontIcon from '../font_icon/FontIcon';
+import Scrollable from '../Scrollable';
 
 const factory = (FontIcon) => {
   class Input extends React.Component {
@@ -198,21 +199,23 @@ const factory = (FontIcon) => {
       }
 
       return (
-        <div data-react-toolbox="input" className={className}>
-          {React.createElement(multiline ? 'textarea' : 'input', inputElementProps)}
-          {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
-          <span className={theme.bar} />
-          {labelText
-            ? <label className={labelClassName}>
-              {labelText}
-              {required ? <span className={theme.required}> * </span> : null}
-            </label>
-            : null}
-          {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
-          {error ? <span className={theme.error}>{error}</span> : null}
-          {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
-          {children}
-        </div>
+        <Scrollable>
+          <div data-react-toolbox="input" className={className}>
+            {React.createElement(multiline ? 'textarea' : 'input', inputElementProps)}
+            {icon ? <FontIcon className={theme.icon} value={icon} /> : null}
+            <span className={theme.bar} />
+            {labelText
+              ? <label className={labelClassName}>
+                {labelText}
+                {required ? <span className={theme.required}> * </span> : null}
+              </label>
+              : null}
+            {hint ? <span hidden={labelText} className={theme.hint}>{hint}</span> : null}
+            {error ? <span className={theme.error}>{error}</span> : null}
+            {maxLength ? <span className={theme.counter}>{length}/{maxLength}</span> : null}
+            {children}
+          </div>
+        </Scrollable>
       );
     }
   }
