@@ -108,7 +108,8 @@
 .tab {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding: var(--tab-label-v-padding) var(--tab-label-h-padding);
   position: relative;
 
