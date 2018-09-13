@@ -5,6 +5,7 @@
 
 .dropdown {
   position: relative;
+  outline: none;
 
   @apply --reset;
 
