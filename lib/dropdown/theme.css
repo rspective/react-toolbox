@@ -507,6 +507,7 @@
   overflow-y: auto;
   padding: 0;
   position: absolute;
+  right: -1px;
   transition-duration: var(--animation-duration);
   transition-property: max-height, box-shadow;
   transition-timing-function: var(--animation-curve-default);
