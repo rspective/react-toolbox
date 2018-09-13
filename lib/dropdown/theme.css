@@ -506,7 +506,11 @@
   list-style: none;
   margin: 0;
   overflow-y: auto;
-  padding: 1px;
+  padding: 0;
+  width: 95%;
+  left: 0;
+  right: 0;
+  margin: auto;
   position: absolute;
   transition-duration: var(--animation-duration);
   transition-property: max-height, box-shadow;
