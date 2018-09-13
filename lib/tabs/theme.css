@@ -477,8 +477,6 @@
 .tab {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
   padding: var(--tab-label-v-padding) var(--tab-label-h-padding);
   position: relative
 }
