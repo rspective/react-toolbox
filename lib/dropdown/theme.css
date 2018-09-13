@@ -515,7 +515,6 @@
   transition-duration: var(--animation-duration);
   transition-property: max-height, box-shadow;
   transition-timing-function: var(--animation-curve-default);
-  width: 100%;
   z-index: var(--z-index-high)
 }
 .values > * {
