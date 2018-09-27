@@ -8,9 +8,9 @@ import { TABLE } from '../identifiers';
 import InjectTableHead from './TableHead';
 import InjectTableRow from './TableRow';
 
-const factory = (TableHead, TableRow) => {
+const factory = (TableHead) => {
   const isTableHead = child => isComponentOfType(TableHead, child);
-  const isTableRow = child => isComponentOfType(TableRow, child);
+  const isTableRow = child => !isComponentOfType(TableHead, child);
 
   class Table extends Component {
     static propTypes = {
