@@ -174,7 +174,8 @@ const tooltipFactory = (options = {}) => {
           this.activate(this.calculatePosition(event.currentTarget));
         }
 
-        if (this.props.onClick) this.props.onClick(event);
+        if (this.props.onClick) return this.props.onClick(event);
+        return null;
       };
 
       render() {
