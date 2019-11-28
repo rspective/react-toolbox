@@ -40,11 +40,17 @@ const factory = (Checkbox, ListItemContent) => {
   };
 
   ListCheckbox.propTypes = {
-    caption: PropTypes.string,
+    caption: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
     checked: PropTypes.bool,
     className: PropTypes.string,
     disabled: PropTypes.bool,
-    legend: PropTypes.string,
+    legend: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
     name: PropTypes.string,
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
