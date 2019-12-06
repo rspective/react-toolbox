@@ -13,6 +13,7 @@ const factory = (Checkbox, TableCell) => {
       className: PropTypes.string,
       idx: PropTypes.number,
       onSelect: PropTypes.func,
+      rowRef: PropTypes.func,
       selectable: PropTypes.bool,
       selected: PropTypes.bool,
       theme: PropTypes.shape({
@@ -28,12 +29,12 @@ const factory = (Checkbox, TableCell) => {
     };
 
     render() {
-      const { children, className, selectable, idx, selected, theme, ...other } = this.props; // eslint-disable-line
+      const { children, className, selectable, idx, selected, theme, rowRef, ...other } = this.props; // eslint-disable-line
       const _className = classnames(theme.row, {
         [theme.selected]: selectable && selected,
       }, className);
       return (
-        <tr {...other} className={_className}>
+        <tr {...other} className={_className} ref={element => rowRef && rowRef(element)}>
           {selectable && <TableCell className={theme.checkboxCell}>
             <Checkbox theme={theme} checked={selected} onChange={this.handleSelect} />
           </TableCell>}

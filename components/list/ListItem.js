@@ -13,6 +13,7 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
       className: PropTypes.string,
       disabled: PropTypes.bool,
       hasRipple: PropTypes.bool,
+      itemRef: PropTypes.func,
       onClick: PropTypes.func,
       onMouseDown: PropTypes.func,
       onTouchStart: PropTypes.func,
@@ -75,12 +76,13 @@ const factory = (ripple, ListItemLayout, ListItemContent) => {
         onTouchStart, // eslint-disable-line no-unused-vars
         theme,
         to,
+        itemRef,
         ...other
       } = this.props;
       const children = this.groupChildren();
       const content = <ListItemLayout theme={theme} {...children} {...other} />;
       return (
-        <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown} onTouchStart={onTouchStart}>
+        <li className={`${theme.listItem} ${className}`} onClick={this.handleClick} onMouseDown={onMouseDown} onTouchStart={onTouchStart} ref={element => itemRef && itemRef(element)}>
           {to ? <a href={this.props.to}>{content}</a> : content}
           {children.ignored}
         </li>

@@ -34,6 +34,7 @@ export interface TableRowProps extends ReactToolbox.Props {
    * If true, the row will be considered as selected so the row will display a selected style with the selection control activated. This property is used by `Table` to figure out the selection when you interact with the Table.
    */
   selected?: boolean;
+  rowRef?: Function;
   /**
    * Classnames object defining the component style.
    */

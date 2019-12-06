@@ -26,6 +26,7 @@ export interface ListItemProps extends ReactToolbox.Props {
    * If true, the item displays a ripple effect on click. By default it's inherited from the parent element.
    */
   ripple?: boolean;
+  itemRef?: Function;
   /**
    * Classnames object defining the component style.
    * @default false
