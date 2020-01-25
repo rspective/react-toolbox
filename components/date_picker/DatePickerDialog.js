@@ -51,11 +51,13 @@ const factory = (Dialog, Calendar) => {
       date: this.props.value,
     };
 
-    componentWillMount() {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillMount() {
       this.updateStateDate(this.props.value);
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       this.updateStateDate(nextProps.value);
     }
 

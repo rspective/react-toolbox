@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
-import { TIME_PICKER } from 'react-toolbox/lib/identifiers';
-import events from 'react-toolbox/lib/utils/events';
-import time from 'react-toolbox/lib/utils/time';
-import InjectDialog from 'react-toolbox/lib/dialog/Dialog';
-import InjectInput from 'react-toolbox/lib/input/Input';
 
+import { TIME_PICKER } from '../identifiers';
+import events from '../utils/events';
+import time from '../utils/time';
+import InjectDialog from '../dialog/Dialog';
+import InjectInput from '../input/Input';
 import timePickerDialogFactory from './TimePickerDialog';
 
 const factory = (TimePickerDialog, Input) => {
@@ -47,7 +47,8 @@ const factory = (TimePickerDialog, Input) => {
       active: this.props.active,
     };
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (nextProps.active !== this.props.active && this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }

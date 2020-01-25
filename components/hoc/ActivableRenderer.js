@@ -18,7 +18,8 @@ const ActivableRendererFactory = (options = { delay: 500 }) =>
       rendered: this.props.active,
     };
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (nextProps.active && !this.props.active) this.renderAndActivate();
       if (!nextProps.active && this.props.active) this.deactivateAndUnrender();
     }

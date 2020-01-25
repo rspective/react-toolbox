@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import time from 'react-toolbox/lib/utils/time';
 
+import time from '../utils/time';
 import Clock from './Clock';
 
 const factory = (Dialog) => {
@@ -50,7 +50,8 @@ const factory = (Dialog) => {
       displayTime: new Date(this.props.value.getTime()),
     };
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (nextProps.value.getTime() !== this.state.displayTime.getTime()) {
         this.setState({ displayTime: new Date(nextProps.value.getTime()) });
       }

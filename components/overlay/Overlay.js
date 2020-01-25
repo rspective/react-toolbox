@@ -29,7 +29,8 @@ class Overlay extends Component {
     if (active && lockScroll) document.body.style.overflow = 'hidden';
   }
 
-  componentWillUpdate(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillUpdate(nextProps) {
     if (this.props.lockScroll) {
       const becomingActive = nextProps.active && !this.props.active;
       const becomingUnactive = !nextProps.active && this.props.active;

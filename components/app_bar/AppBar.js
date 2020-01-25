@@ -54,7 +54,8 @@ const factory = (IconButton) => {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (!this.props.scrollHide && nextProps.scrollHide) {
         this.initializeScroll();
       }

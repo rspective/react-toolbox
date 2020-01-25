@@ -68,7 +68,8 @@ const factory = (MenuItem) => {
       });
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (this.props.position !== nextProps.position) {
         const position = nextProps.position === POSITION.AUTO
           ? this.calculatePosition()
@@ -105,7 +106,8 @@ const factory = (MenuItem) => {
       }
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillUpdate(nextProps, nextState) {
       if (!this.state.active && nextState.active) {
         events.addEventsToDocument({
           click: this.handleDocumentClick,

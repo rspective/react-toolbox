@@ -80,7 +80,8 @@ const factory = (FontIcon) => {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (!this.props.multiline && nextProps.multiline) {
         window.addEventListener('resize', this.handleAutoresize);
       } else if (this.props.multiline && !nextProps.multiline) {

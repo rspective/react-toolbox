@@ -77,7 +77,8 @@ const factory = (ProgressBar, Input) => {
       this.handleResize();
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (this.state.inputFocused && this.props.value !== nextProps.value) {
         this.setState({ inputValue: this.valueForInput(nextProps.value) });
       }
@@ -87,7 +88,8 @@ const factory = (ProgressBar, Input) => {
       return this.state.inputFocused || !nextState.inputFocused;
     }
 
-    componentWillUpdate(nextProps, nextState) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillUpdate(nextProps, nextState) {
       if (nextState.pressed !== this.state.pressed) {
         if (nextState.pressed) {
           this.props.onDragStart();

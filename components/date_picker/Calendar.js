@@ -42,7 +42,8 @@ const factory = (IconButton) => {
       viewDate: this.props.selectedDate,
     };
 
-    componentWillMount() {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillMount() {
       document.body.addEventListener('keydown', this.handleKeys);
     }
 

@@ -66,7 +66,8 @@ const factory = (Input) => {
       up: false,
     };
 
-    componentWillUpdate(nextProps, nextState) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillUpdate(nextProps, nextState) {
       if (!this.state.active && nextState.active) {
         events.addEventsToDocument(this.getDocumentEvents());
       }

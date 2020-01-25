@@ -46,7 +46,8 @@ const factory = (IconButton, Menu) => {
       active: this.props.active,
     }
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }

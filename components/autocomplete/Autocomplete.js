@@ -80,7 +80,8 @@ const factory = (Chip, Input) => {
       isValueAnObject: false,
     };
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (!this.props.multiple) {
         const query = nextProps.query ? nextProps.query : this.query(nextProps.value);
         this.updateQuery(query, false);

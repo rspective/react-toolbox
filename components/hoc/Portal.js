@@ -19,7 +19,8 @@ class Portal extends Component {
     this._renderOverlay();
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this._overlayTarget && nextProps.container !== this.props.container) {
       this._portalContainerNode.removeChild(this._overlayTarget);
       this._portalContainerNode = getContainer(nextProps.container);

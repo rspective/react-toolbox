@@ -65,7 +65,8 @@ const factory = (Input, DatePickerDialog) => {
       active: this.props.active,
     };
 
-    componentWillReceiveProps(nextProps) {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillReceiveProps(nextProps) {
       if (nextProps.active !== this.props.active && this.state.active !== nextProps.active) {
         this.setState({ active: nextProps.active });
       }
