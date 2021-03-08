@@ -43,6 +43,7 @@ const factory = (Avatar) => {
       PropTypes.element,
     ]),
     theme: PropTypes.shape({
+      cardTitle: PropTypes.string,
       large: PropTypes.string,
       title: PropTypes.string,
       small: PropTypes.string,

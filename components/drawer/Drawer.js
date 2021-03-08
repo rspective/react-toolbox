@@ -57,6 +57,7 @@ const factory = (Overlay) => {
       drawer: PropTypes.string,
       left: PropTypes.string,
       right: PropTypes.string,
+      wrapper: PropTypes.string,
     }),
     type: PropTypes.oneOf([
       'left', 'right',

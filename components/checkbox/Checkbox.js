@@ -28,6 +28,7 @@ const factory = (Check) => {
         field: PropTypes.string,
         input: PropTypes.string,
         ripple: PropTypes.string,
+        text: PropTypes.string,
       }),
     };
 

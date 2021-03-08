@@ -48,6 +48,7 @@ const tooltipFactory = (options = {}) => {
         theme: PropTypes.shape({
           tooltip: PropTypes.string,
           tooltipActive: PropTypes.string,
+          tooltipInner: PropTypes.string,
           tooltipWrapper: PropTypes.string,
         }),
         tooltip: PropTypes.oneOfType([

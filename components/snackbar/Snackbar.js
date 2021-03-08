@@ -26,6 +26,7 @@ const factory = (Button) => {
         button: PropTypes.string,
         cancel: PropTypes.string,
         label: PropTypes.string,
+        portal: PropTypes.string,
         snackbar: PropTypes.string,
         warning: PropTypes.string,
       }),

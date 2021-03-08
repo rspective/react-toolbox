@@ -24,6 +24,7 @@ const factory = (ripple, FontIcon) => {
         active: PropTypes.string,
         disabled: PropTypes.string,
         hidden: PropTypes.string,
+        icon: PropTypes.string,
         label: PropTypes.string,
         rippleWrapper: PropTypes.string,
         withIcon: PropTypes.string,

@@ -35,6 +35,7 @@ const factory = (ProgressBar, Input) => {
       style: styleShape,
       theme: PropTypes.shape({
         container: PropTypes.string,
+        disabled: PropTypes.string,
         editable: PropTypes.string,
         innerknob: PropTypes.string,
         innerprogress: PropTypes.string,
