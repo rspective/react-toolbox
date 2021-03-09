@@ -478,7 +478,8 @@
 .solid:active {
   box-shadow: var(--shadow-2p);
 }
-.solid:focus:not(:active) {
+.solid.browseButton:focus-within,
+  .solid:focus:not(:active) {
   box-shadow:
       0 0 8px rgba(0, 0, 0, 0.18),
       0 8px 16px rgba(0, 0, 0, 0.36);
@@ -593,6 +594,9 @@
   background: var(--button-neutral-color-hover);
 }
 .neutral:not([disabled]).inverse.flat:hover {
+  background: var(--button-neutral-color-hover);
+}
+.neutral:not([disabled]).browseButton:focus-within {
   background: var(--button-neutral-color-hover);
 }
 .neutral.inverse[disabled] {

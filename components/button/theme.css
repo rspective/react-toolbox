@@ -100,6 +100,7 @@
     box-shadow: var(--shadow-2p);
   }
 
+  &.browseButton:focus-within,
   &:focus:not(:active) {
     box-shadow:
       0 0 8px rgba(0, 0, 0, 0.18),
@@ -250,6 +251,9 @@
     &.flat:hover {
       background: var(--button-neutral-color-hover);
     }
+  }
+  &.browseButton:focus-within {
+    background: var(--button-neutral-color-hover);
   }
 }
 

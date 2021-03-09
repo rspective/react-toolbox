@@ -20,6 +20,7 @@ const factory = (ripple, FontIcon) => {
       label: PropTypes.node,
       onActive: PropTypes.func,
       onClick: PropTypes.func,
+      onKeyDown: PropTypes.func,
       theme: PropTypes.shape({
         active: PropTypes.string,
         disabled: PropTypes.string,
@@ -51,6 +52,12 @@ const factory = (ripple, FontIcon) => {
       }
     };
 
+    handleKeyDown = (event) => {
+      if (!this.props.disabled && this.props.onKeyDown) {
+        this.props.onKeyDown(event, this.props.index);
+      }
+    };
+
     render() {
       const {
         index, onActive, // eslint-disable-line
@@ -66,7 +73,15 @@ const factory = (ripple, FontIcon) => {
       }, className);
 
       return (
-        <div {...other} data-react-toolbox="tab" role="tab" tabIndex="0" className={_className} onClick={this.handleClick}>
+        <div
+          {...other}
+          data-react-toolbox="tab"
+          role="tab"
+          tabIndex="0"
+          className={_className}
+          onClick={this.handleClick}
+          onKeyDown={this.handleKeyDown}
+        >
           {icon && <FontIcon className={theme.icon} value={icon} />}
           {label}
           {children}

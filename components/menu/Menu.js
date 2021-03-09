@@ -4,9 +4,24 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
-import { events } from '../utils';
-import { getViewport } from '../utils/utils';
+import { events, mod, getViewport } from '../utils';
 import InjectMenuItem from './MenuItem';
+import KEYS from '../utils/keymap';
+
+
+const debounce = (func, wait) => {
+  let timeout;
+
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
 const POSITION = {
   AUTO: 'auto',
@@ -23,6 +38,7 @@ const factory = (MenuItem) => {
       active: PropTypes.bool,
       children: PropTypes.node,
       className: PropTypes.string,
+      focusable: PropTypes.bool,
       onHide: PropTypes.func,
       onSelect: PropTypes.func,
       onShow: PropTypes.func,
@@ -42,11 +58,13 @@ const factory = (MenuItem) => {
         static: PropTypes.string,
         topLeft: PropTypes.string,
         topRight: PropTypes.string,
+        itemWrapper: PropTypes.string,
       }),
     };
 
     static defaultProps = {
       active: false,
+      focusable: true,
       outline: true,
       position: POSITION.STATIC,
       ripple: true,
@@ -56,6 +74,7 @@ const factory = (MenuItem) => {
     state = {
       active: this.props.active,
       rippled: false,
+      focusedItemIndex: undefined,
     };
 
     componentDidMount() {
@@ -164,6 +183,125 @@ const factory = (MenuItem) => {
         : undefined;
     }
 
+    getNextSelectableItemIndex = (focusedItemIndex) => {
+      const children = Array.from(this.menuNode.children);
+      let nextIndex = focusedItemIndex;
+      do {
+        nextIndex = mod(nextIndex + 1, children.length);
+      } while (children[nextIndex] &&
+        (children[nextIndex].disabled || children[nextIndex].childElementCount === 0) &&
+        nextIndex !== focusedItemIndex
+      );
+
+      return nextIndex;
+    };
+
+    getPreviousSelectableItemIndex = (focusedItemIndex) => {
+      const children = Array.from(this.menuNode.children);
+
+      let previousIndex = focusedItemIndex;
+      do {
+        previousIndex = mod(previousIndex - 1, children.length);
+      } while (children[previousIndex] &&
+        (children[previousIndex].disabled || children[previousIndex].childElementCount === 0) &&
+        previousIndex !== focusedItemIndex
+      );
+
+      return previousIndex;
+    };
+
+    setFocusOnMouseMove = debounce((event) => {
+      const { focusable } = this.props;
+      if (!focusable) {
+        return;
+      }
+      const indexOfHoveredItem = Array.from(this.menuNode.children)
+        .findIndex(element => this.isDescendant(element, event.target));
+      if (indexOfHoveredItem === -1 || indexOfHoveredItem === this.state.focusedItemIndex) {
+        return;
+      }
+      this.setState({
+        focusedItemIndex: indexOfHoveredItem,
+      });
+
+      this.menuNode.children[indexOfHoveredItem].focus();
+    }, 10);
+
+    isDescendant = (parent, child) => {
+      if (parent === child) {
+        return true;
+      }
+      let node = child.parentNode;
+      while (node != null) {
+        if (node === parent) {
+          return true;
+        }
+        node = node.parentNode;
+      }
+      return false;
+    }
+
+    handleMouseMove = (event) => {
+      event.persist();
+      this.setFocusOnMouseMove(event);
+    };
+
+    handleItemKeyDown = (item, event) => {
+      const { focusable } = this.props;
+      const childrenElements = Array.from(this.menuNode.children);
+
+      if (!focusable || childrenElements.length === 0) {
+        return;
+      }
+
+      const charCode = event.which || event.keyCode;
+      if (charCode === KEYS.ENTER || charCode === KEYS.SPACE) {
+        this.handleSelect(item, event);
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
+    handleKeyDown = (event) => {
+      const { focusable } = this.props;
+      const childrenElements = Array.from(this.menuNode.children);
+
+      if (!focusable || childrenElements.length === 0) {
+        return;
+      }
+      const { focusedItemIndex } = this.state;
+      const nextItemIndex = this.getNextSelectableItemIndex(focusedItemIndex || 0);
+      const previousItemIndex = this.getPreviousSelectableItemIndex(focusedItemIndex || 0);
+
+      const charCode = event.which || event.keyCode;
+      let newFocusedItemIndex;
+
+      switch (charCode) {
+        case KEYS.UP_ARROW:
+          newFocusedItemIndex = previousItemIndex;
+          break;
+        case KEYS.DOWN_ARROW:
+          newFocusedItemIndex = nextItemIndex;
+          break;
+        case KEYS.LEFT_ARROW:
+        case KEYS.RIGHT_ARROW:
+          event.preventDefault();
+          event.stopPropagation();
+          break;
+        case KEYS.TAB:
+          this.hide();
+          break;
+        default: return;
+      }
+
+      if (newFocusedItemIndex || newFocusedItemIndex === 0) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.menuNode.children[newFocusedItemIndex].focus();
+        this.setState({ focusedItemIndex: newFocusedItemIndex });
+      }
+    };
+
     calculatePosition() {
       const parentNode = ReactDOM.findDOMNode(this).parentNode;
       if (!parentNode) return undefined;
@@ -191,7 +329,13 @@ const factory = (MenuItem) => {
 
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();
+      const { focusable } = this.props;
+      const children = Array.from(this.menuNode.children);
+
       this.setState({ active: true, width, height });
+      if (focusable && children.length !== 0) {
+        this.menuNode.children[this.getNextSelectableItemIndex(-1)].focus();
+      }
     }
 
     hide() {
@@ -199,6 +343,8 @@ const factory = (MenuItem) => {
     }
 
     renderItems() {
+      const { theme } = this.props;
+
       return React.Children.map(this.props.children, (item) => {
         if (!item) return item;
         if (item.type === MenuItem) {
@@ -208,9 +354,15 @@ const factory = (MenuItem) => {
               && this.props.selectable
               && item.props.value === this.props.selected,
             onClick: this.handleSelect.bind(this, item),
+            onMouseMove: this.handleMouseMove,
+            onKeyDown: this.handleItemKeyDown.bind(this, item),
           });
         }
-        return React.cloneElement(item);
+        return (<div onMouseMove={this.handleMouseMove} tabIndex={-1} className={theme.itemWrapper}>
+          {React.cloneElement(item, {
+            onMouseMove: this.handleMouseMove,
+          })}
+        </div>);
       });
     }
 
@@ -229,6 +381,8 @@ const factory = (MenuItem) => {
             ref={(node) => { this.menuNode = node; }}
             className={theme.menuInner}
             style={this.getMenuStyle()}
+            onKeyDown={this.handleKeyDown}
+            tabIndex="-1"
           >
             {this.renderItems()}
           </ul>

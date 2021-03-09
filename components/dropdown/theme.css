@@ -40,7 +40,7 @@
   }
 
   &.disabled {
-    cursor: normal;
+    cursor: default;
     pointer-events: none;
   }
 }
@@ -87,7 +87,7 @@
   }
 
   &.disabled {
-    cursor: normal;
+    cursor: default;
     pointer-events: none;
 
     & > .templateValue {
@@ -148,8 +148,12 @@
     padding: var(--unit);
     position: relative;
 
-    &:hover:not(.disabled) {
+    &.focused:not(.disabled) {
       background-color: var(--dropdown-value-hover-background);
+      outline: none;
+    }
+    &:focus {
+      outline: none;
     }
 
     &.selected {
