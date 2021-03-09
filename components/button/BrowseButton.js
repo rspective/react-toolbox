@@ -149,6 +149,7 @@ const factory = (ripple, FontIcon) => {
           accept={accept}
           multiple={multiple}
           onChange={this.handleFileChange}
+          disabled={props.disabled}
           ref={(input) => {
             if (input) {
               this.fileInput = input;

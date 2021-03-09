@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import { themr } from 'react-css-themr';
 import { MENU } from '../identifiers';
-import { events } from '../utils';
-import { getViewport } from '../utils/utils';
+import { events, mod, getViewport } from '../utils';
 import InjectMenuItem from './MenuItem';
+import KEYS from '../utils/keymap';
 
 const POSITION = {
   AUTO: 'auto',
@@ -56,6 +56,7 @@ const factory = (MenuItem) => {
     state = {
       active: this.props.active,
       rippled: false,
+      focusedItemIndex: undefined,
     };
 
     componentDidMount() {
@@ -164,6 +165,84 @@ const factory = (MenuItem) => {
         : undefined;
     }
 
+    getNextSelectableItemIndex = (focusedItemIndex) => {
+      const { children } = this.props;
+      let nextIndex;
+      do {
+        nextIndex = mod(focusedItemIndex + 1, children.length);
+      } while (children[nextIndex].disabled && nextIndex !== focusedItemIndex);
+
+      return nextIndex;
+    };
+
+    getPreviousSelectableItemIndex = (focusedItemIndex) => {
+      const { children } = this.props;
+
+      let previousIndex;
+      do {
+        previousIndex = mod(focusedItemIndex - 1, children.length);
+      } while (children[previousIndex].disabled && previousIndex !== focusedItemIndex);
+
+      return previousIndex;
+    };
+
+    handleMouseMove = (item) => {
+      const { children } = this.props;
+
+      const indexOfHoveredItem = children.indexOf(item);
+
+      if (indexOfHoveredItem === this.state.focusedItemIndex) {
+        return;
+      }
+      this.setState({
+        focusedItemIndex: indexOfHoveredItem,
+      });
+      this.menuNode.children[indexOfHoveredItem].focus();
+    };
+
+    handleKeyDown = (event) => {
+      const { children } = this.props;
+      const { focusedItemIndex } = this.state;
+
+      const currentItem = children[focusedItemIndex || 0];
+      const nextItemIndex = this.getNextSelectableItemIndex(focusedItemIndex || 0);
+      const previousItemIndex = this.getPreviousSelectableItemIndex(focusedItemIndex || 0);
+
+      const charCode = event.which || event.keyCode;
+      let newFocusedItemIndex;
+
+      switch (charCode) {
+        case KEYS.UP_ARROW:
+          newFocusedItemIndex = previousItemIndex;
+          break;
+        case KEYS.DOWN_ARROW:
+          newFocusedItemIndex = nextItemIndex;
+          break;
+        case KEYS.LEFT_ARROW:
+        case KEYS.RIGHT_ARROW:
+          event.preventDefault();
+          event.stopPropagation();
+          break;
+        case KEYS.TAB:
+          this.hide();
+          break;
+        case KEYS.ENTER:
+        case KEYS.SPACE:
+          this.handleSelect(currentItem, event);
+          event.preventDefault();
+          event.stopPropagation();
+          break;
+        default: return;
+      }
+
+      if (newFocusedItemIndex || newFocusedItemIndex === 0) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.menuNode.children[newFocusedItemIndex].focus();
+        this.setState({ focusedItemIndex: newFocusedItemIndex });
+      }
+    };
+
     calculatePosition() {
       const parentNode = ReactDOM.findDOMNode(this).parentNode;
       if (!parentNode) return undefined;
@@ -192,6 +271,7 @@ const factory = (MenuItem) => {
     show() {
       const { width, height } = this.menuNode.getBoundingClientRect();
       this.setState({ active: true, width, height });
+      this.menuNode.children[this.getNextSelectableItemIndex(-1)].focus();
     }
 
     hide() {
@@ -208,6 +288,7 @@ const factory = (MenuItem) => {
               && this.props.selectable
               && item.props.value === this.props.selected,
             onClick: this.handleSelect.bind(this, item),
+            onMouseMove: this.handleMouseMove.bind(this, item),
           });
         }
         return React.cloneElement(item);
@@ -229,6 +310,8 @@ const factory = (MenuItem) => {
             ref={(node) => { this.menuNode = node; }}
             className={theme.menuInner}
             style={this.getMenuStyle()}
+            onKeyDown={this.handleKeyDown}
+            tabIndex="-1"
           >
             {this.renderItems()}
           </ul>

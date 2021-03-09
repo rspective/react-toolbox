@@ -5,6 +5,7 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import { range, getAnimationModule } from '../utils/utils';
 import time from '../utils/time';
 import CalendarMonth from './CalendarMonth';
+import KEYS from '../utils/keymap';
 
 const DIRECTION_STEPS = { left: -1, right: 1 };
 
@@ -75,17 +76,30 @@ const factory = (IconButton) => {
 
     handleKeys = (e) => {
       const { selectedDate } = this.props;
+      const charCode = e.which || e.keyCode;
+      const steeringKeys = [
+        KEYS.LEFT_ARROW,
+        KEYS.UP_ARROW,
+        KEYS.RIGHT_ARROW,
+        KEYS.DOWN_ARROW,
+        KEYS.ENTER,
+        KEYS.SPACE,
+      ];
 
-      if (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40 || e.which === 13) {
+      if (steeringKeys.includes(charCode)) {
         e.preventDefault();
+        e.stopPropagation();
       }
 
-      switch (e.which) {
-        case 13: this.props.handleSelect(); break; // enter
-        case 37: this.handleDayArrowKey(time.addDays(selectedDate, -1)); break; // left
-        case 38: this.handleDayArrowKey(time.addDays(selectedDate, -7)); break; // up
-        case 39: this.handleDayArrowKey(time.addDays(selectedDate, 1)); break; // right
-        case 40: this.handleDayArrowKey(time.addDays(selectedDate, 7)); break; // down
+      switch (charCode) {
+        case KEYS.ENTER:
+        case KEYS.SPACE:
+          this.props.handleSelect();
+          break;
+        case KEYS.LEFT_ARROW: this.handleDayArrowKey(time.addDays(selectedDate, -1)); break;
+        case KEYS.UP_ARROW: this.handleDayArrowKey(time.addDays(selectedDate, -7)); break;
+        case KEYS.RIGHT_ARROW: this.handleDayArrowKey(time.addDays(selectedDate, 1)); break;
+        case KEYS.DOWN_ARROW: this.handleDayArrowKey(time.addDays(selectedDate, 7)); break;
         default: break;
       }
     }

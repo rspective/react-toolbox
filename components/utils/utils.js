@@ -81,3 +81,10 @@ export const isValuePresent = value => (
     && value !== ''
     && !(typeof value === 'number' && isNaN(value))
 );
+
+/**
+ * handles negative modulo, ie. -1 % 5 = 4
+ * @param x number
+ * @param d number dividend
+ */
+export const mod = (x, d) => ((x % d) + d) % d;
