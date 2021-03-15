@@ -41,8 +41,17 @@
   }
 }
 
+.label:focus:not(:active) {
+  & .on, & .off {
+    outline: solid var(--switch-thumb-on-color);
+  }
+}
+
 .on,
 .off {
+  &:focus {
+    outline: none;
+  }
   border-radius: var(--switch-track-height);
   cursor: pointer;
   display: inline-block;

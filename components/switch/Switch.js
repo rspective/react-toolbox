@@ -5,6 +5,7 @@ import { themr } from 'react-css-themr';
 import { SWITCH } from '../identifiers';
 import rippleFactory from '../ripple/Ripple';
 import thumbFactory from './Thumb';
+import KEYS from '../utils/keymap';
 
 const factory = (Thumb) => {
   class Switch extends Component {
@@ -41,7 +42,25 @@ const factory = (Thumb) => {
       if (!this.props.disabled && this.props.onChange) {
         this.props.onChange(!this.props.checked, event);
       }
+      this.blur();
+      this.labelNode.blur();
     };
+
+    handleKeyDown = (event) => {
+      const charCode = event.which || event.keyCode;
+      if (charCode !== KEYS.SPACE && charCode !== KEYS.ENTER) {
+        return;
+      }
+      if (this.props.disabled) {
+        return;
+      }
+
+      if (this.props.onChange) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.props.onChange(!this.props.checked, event);
+      }
+    }
 
     blur() {
       this.inputNode.blur();
@@ -61,9 +80,16 @@ const factory = (Thumb) => {
         theme,
         ...others
       } = this.props;
-      const _className = classnames(theme[disabled ? 'disabled' : 'field'], className);
+      const _className = classnames(theme[disabled ? 'disabled' : 'field'], className, theme.label);
       return (
-        <label data-react-toolbox="switch" className={_className}>
+        <label
+          data-react-toolbox="switch"
+          className={_className}
+          tabIndex="0"
+          style={{ outline: 'none' }}
+          onKeyDown={this.handleKeyDown}
+          ref={(node) => { this.labelNode = node; }}
+        >
           <input
             {...others}
             checked={this.props.checked}
@@ -72,8 +98,9 @@ const factory = (Thumb) => {
             readOnly
             ref={(node) => { this.inputNode = node; }}
             type="checkbox"
+            tabIndex="-1"
           />
-          <span className={theme[checked ? 'on' : 'off']}>
+          <span className={theme[checked ? 'on' : 'off']} tabIndex="-1">
             <Thumb disabled={this.props.disabled} theme={theme} ripple={ripple} />
           </span>
           {this.props.label ? <span className={theme.text}>{this.props.label}</span> : null}

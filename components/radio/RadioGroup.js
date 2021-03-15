@@ -11,6 +11,7 @@ const factory = (RadioButton) => {
       children: PropTypes.node,
       className: PropTypes.string,
       disabled: PropTypes.bool,
+      name: PropTypes.string,
       onChange: PropTypes.func,
       value: PropTypes.string,
     };
@@ -31,6 +32,7 @@ const factory = (RadioButton) => {
           : React.cloneElement(child, {
             checked: child.props.value === this.props.value,
             disabled: this.props.disabled || child.props.disabled,
+            name: this.props.name || child.props.name,
             onChange: this.handleChange.bind(this, child.props.value),
           })
       ));

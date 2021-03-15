@@ -471,6 +471,11 @@
           opacity var(--menu-fade-duration) var(--animation-curve-default),
           clip var(--menu-expand-duration) var(--animation-curve-default);
 }
+.itemWrapper:focus {
+  background-color: var(--menu-item-hover-background);
+  cursor: pointer;
+  outline: none;
+}
 .outline {
   background-color: var(--menu-background-color);
   border-radius: var(--menu-outline-border-radius);
@@ -498,9 +503,10 @@
   padding: 0 var(--menu-item-padding);
   position: relative
 }
-.menuItem:not(.disabled):hover {
+.menuItem:not(.disabled):focus {
   background-color: var(--menu-item-hover-background);
   cursor: pointer;
+  outline: none;
 }
 .menuItem.disabled {
   opacity: 0.5;

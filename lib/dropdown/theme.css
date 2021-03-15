@@ -431,7 +431,7 @@
   top: auto;
 }
 .dropdown.disabled {
-  cursor: normal;
+  cursor: default;
   pointer-events: none;
 }
 .value > input {
@@ -468,7 +468,7 @@
   color: var(--input-text-error-color);
 }
 .field.disabled {
-  cursor: normal;
+  cursor: default;
   pointer-events: none;
 }
 .field.disabled > .templateValue {
@@ -522,8 +522,12 @@
   padding: var(--unit);
   position: relative;
 }
-.values > *:hover:not(.disabled) {
+.values > *.focused:not(.disabled) {
   background-color: var(--dropdown-value-hover-background);
+  outline: none;
+}
+.values > *:focus {
+  outline: none;
 }
 .values > *.selected {
   color: var(--dropdown-color-primary);

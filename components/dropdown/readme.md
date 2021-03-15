@@ -1,5 +1,10 @@
 # Dropdown
 
+## Developing
+
+This library is buildable only on nodejs version 8
+
+## Overview
 The Dropdown selects an option between multiple selections. The element displays the current state and a down arrow. When it is clicked, it displays the list of available options.
 
 <!-- example -->
@@ -67,6 +72,7 @@ This component uses an `Input` under the covers. The theme object is passed down
 | `field`         | Used for the inner wrapper of the component.|
 | `label`         | Used for the the label element.|
 | `selected`      | Used to highlight the selected value.|
+| `focused`       | Used to highlight the currently focused value.|
 | `templateValue` | Used as a wrapper for the given template value.|
 | `up`            | Added to the root element when it's opening up.|
 | `value`         | Used for each value in the dropdown component.|

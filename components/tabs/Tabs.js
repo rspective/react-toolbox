@@ -7,6 +7,8 @@ import InjectFontIcon from '../font_icon/FontIcon';
 import isComponentOfType from '../utils/is-component-of-type';
 import InjectTab from './Tab';
 import InjectTabContent from './TabContent';
+import KEYS from '../utils/keymap';
+import { mod } from '../utils';
 
 const factory = (Tab, TabContent, FontIcon) => {
   const isTab = child => isComponentOfType(Tab, child);
@@ -21,6 +23,7 @@ const factory = (Tab, TabContent, FontIcon) => {
       hideMode: PropTypes.oneOf(['display', 'unmounted']),
       index: PropTypes.number,
       inverse: PropTypes.bool,
+      navigateByArrows: PropTypes.bool,
       onChange: PropTypes.func,
       theme: PropTypes.shape({
         arrow: PropTypes.string,
@@ -40,6 +43,7 @@ const factory = (Tab, TabContent, FontIcon) => {
       fixed: false,
       inverse: false,
       hideMode: 'unmounted',
+      navigateByArrows: false,
     };
 
     state = {
@@ -49,6 +53,7 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     componentDidMount() {
       window.addEventListener('resize', this.handleResize);
+      window.addEventListener('keydown', this.handleKeyDown);
       this.handleResize();
     }
 
@@ -63,11 +68,13 @@ const factory = (Tab, TabContent, FontIcon) => {
 
     componentWillUnmount() {
       window.removeEventListener('resize', this.handleResize);
+      window.removeEventListener('keydown', this.handleKeyDown);
+
       clearTimeout(this.resizeTimeout);
       if (this.updatePointerAnimationFrame) cancelAnimationFrame(this.updatePointerAnimationFrame);
     }
 
-    handleHeaderClick = (idx) => {
+    handleHeaderSelect = (idx) => {
       if (this.props.onChange) {
         this.props.onChange(idx);
       }
@@ -80,6 +87,24 @@ const factory = (Tab, TabContent, FontIcon) => {
         this.updateArrows();
       }, 100);
     };
+
+    handleKeyDown = (event) => {
+      if (!this.props.navigateByArrows) {
+        return;
+      }
+      const excludedElements = ['INPUT', 'TEXTAREA'];
+      if (excludedElements.includes(event.target.nodeName)) {
+        return;
+      }
+
+      const charCode = event.which || event.keyCode;
+      if (charCode === KEYS.LEFT_ARROW) {
+        this.handleHeaderSelect(mod(this.props.index - 1, this.props.children.length));
+      }
+      if (charCode === KEYS.RIGHT_ARROW) {
+        this.handleHeaderSelect(mod(this.props.index + 1, this.props.children.length));
+      }
+    }
 
     updatePointer = (idx) => {
       if (this.navigationNode && this.navigationNode.children[idx]) {
@@ -159,7 +184,15 @@ const factory = (Tab, TabContent, FontIcon) => {
         theme: this.props.theme,
         active: this.props.index === idx,
         onClick: (event, index) => {
-          this.handleHeaderClick(index);
+          this.handleHeaderSelect(index);
+          if (item.props.onClick) item.props.onClick(event);
+        },
+        onKeyDown: (event, index) => {
+          const charCode = event.which || event.keyCode;
+          if (charCode !== KEYS.SPACE && charCode !== KEYS.ENTER) {
+            return;
+          }
+          this.handleHeaderSelect(index);
           if (item.props.onClick) item.props.onClick(event);
         },
       }));

@@ -40,6 +40,7 @@ const factory = (ripple, FontIcon) => {
       theme: PropTypes.shape({
         accent: PropTypes.string,
         button: PropTypes.string,
+        browseButton: PropTypes.string,
         flat: PropTypes.string,
         floating: PropTypes.string,
         icon: PropTypes.string,
@@ -119,11 +120,12 @@ const factory = (ripple, FontIcon) => {
         triggerOnChangeForSameFile, // eslint-disable-line
         ...others
       } = this.props;
+
       const element = 'label';
       const level = this.getLevel();
       const shape = this.getShape();
 
-      const classes = classnames(theme.button, [theme[shape]], {
+      const classes = classnames(theme.button, theme.browseButton, [theme[shape]], {
         [theme[level]]: neutral,
         [theme.mini]: mini,
         [theme.inverse]: inverse,
@@ -149,6 +151,7 @@ const factory = (ripple, FontIcon) => {
           accept={accept}
           multiple={multiple}
           onChange={this.handleFileChange}
+          disabled={props.disabled}
           ref={(input) => {
             if (input) {
               this.fileInput = input;

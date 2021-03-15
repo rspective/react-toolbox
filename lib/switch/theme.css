@@ -426,6 +426,12 @@
   opacity: 0.3;
   transition-duration: var(--switch-ripple-duration);
 }
+.label:focus:not(:active) .on, .label:focus:not(:active) .off {
+  outline: solid var(--switch-thumb-on-color);
+}
+.on:focus, .off:focus {
+  outline: none;
+}
 .on,
 .off {
   border-radius: var(--switch-track-height);
