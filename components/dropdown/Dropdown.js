@@ -214,7 +214,9 @@ const factory = (Input) => {
 
     open = (event) => {
       if (this.state.active) return;
-      const client = event.target.getBoundingClientRect();
+
+      const targetElement = event ? event.target : this.inputComponent.inputNode
+      const client = targetElement.getBoundingClientRect();
       const screenHeight = window.innerHeight || document.documentElement.offsetHeight;
       const up = this.props.auto ? client.top > ((screenHeight / 2) + client.height) : false;
       this.setState({ active: true, up });
@@ -358,6 +360,9 @@ const factory = (Input) => {
             theme={theme}
             themeNamespace="input"
             value={selected && selected[labelKey] ? selected[labelKey] : ''}
+            innerRef={node => {
+              this.inputComponent = node;
+            }}
           />
           {template && selected ? this.renderTemplateValue(selected) : null}
           <ul
