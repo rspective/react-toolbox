@@ -98,11 +98,16 @@ const factory = (Tab, TabContent, FontIcon) => {
       }
 
       const charCode = event.which || event.keyCode;
-      if (charCode === KEYS.LEFT_ARROW) {
-        this.handleHeaderSelect(mod(this.props.index - 1, this.props.children.length));
-      }
-      if (charCode === KEYS.RIGHT_ARROW) {
-        this.handleHeaderSelect(mod(this.props.index + 1, this.props.children.length));
+      if (charCode === KEYS.LEFT_ARROW || charCode === KEYS.RIGHT_ARROW) {
+        const idx = charCode === KEYS.LEFT_ARROW ?
+          mod(this.props.index - 1, this.props.children.length) :
+          mod(this.props.index + 1, this.props.children.length);
+
+        this.handleHeaderSelect(idx);
+        const tabNode = this.navigationNode && this.navigationNode.children[idx];
+        if (tabNode) {
+          tabNode.focus();
+        }
       }
     }
 
