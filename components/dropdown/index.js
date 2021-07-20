@@ -1,4 +1,4 @@
-import { themr } from 'react-css-themr';
+import { themr } from '@friendsofreactjs/react-css-themr';
 import { DROPDOWN } from '../identifiers';
 import { dropdownFactory } from './Dropdown';
 import { Input } from '../input';

@@ -1,4 +1,4 @@
-import { themr } from 'react-css-themr';
+import { themr } from '@friendsofreactjs/react-css-themr';
 import { LIST } from '../identifiers';
 import { Avatar } from '../avatar';
 import { Checkbox } from '../checkbox';

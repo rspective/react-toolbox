@@ -1,4 +1,4 @@
-import { themr } from 'react-css-themr';
+import { themr } from '@friendsofreactjs/react-css-themr';
 import { INPUT } from '../identifiers';
 import { inputFactory } from './Input';
 import { FontIcon } from '../font_icon/FontIcon';

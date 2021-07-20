@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { themr } from 'react-css-themr';
+import { themr } from '@friendsofreactjs/react-css-themr';
 import { isValuePresent } from '../utils/utils';
 import { INPUT } from '../identifiers';
 import InjectedFontIcon from '../font_icon/FontIcon';

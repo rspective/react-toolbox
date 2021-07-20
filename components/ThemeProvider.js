@@ -1,1 +1,1 @@
-export { ThemeProvider as default } from 'react-css-themr';
+export { ThemeProvider as default } from '@friendsofreactjs/react-css-themr';

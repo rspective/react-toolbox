@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { themr } from 'react-css-themr';
+import { themr } from '@friendsofreactjs/react-css-themr';
 import { BUTTON } from '../identifiers';
 import InjectFontIcon from '../font_icon';
 import rippleFactory from '../ripple';
