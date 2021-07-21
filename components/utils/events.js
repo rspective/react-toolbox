@@ -22,13 +22,13 @@ export default {
 
   addEventsToDocument(eventMap) {
     Object.keys(eventMap).forEach((key) => {
-      document.addEventListener(key, eventMap[key], false);
+      document.addEventListener(key, eventMap[key], { capture: true });
     });
   },
 
   removeEventsFromDocument(eventMap) {
     Object.keys(eventMap).forEach((key) => {
-      document.removeEventListener(key, eventMap[key], false);
+      document.removeEventListener(key, eventMap[key], { capture: true });
     });
   },
 
